@@ -186,18 +186,18 @@ void dropLinearEquation(double targetDistance, int maxSpeed){
 void positionTracking(){
   globalX = 36;
   globalY = 0;
-  BackLeftDrive.resetRotation();
-  BackRightDrive.resetRotation();
+  LeftRotation.resetPosition();
+  RightRotation.resetPosition();
   while (true){
     double initialHeading = (450-(int)Inertial.heading())%360;
     double initialRadian = initialHeading*(pi/180);
     double initialX = globalX;
     double initialY = globalY;
-    double initialLeft = BackLeftDrive.rotation(deg);
-    double initialRight = BackRightDrive.rotation(deg);
+    double initialLeft = LeftRotation.position(deg);
+    double initialRight = RightRotation.position(deg);
     wait(5, msec);
-    double leftChange = (BackLeftDrive.rotation(deg)- initialLeft)*0.05759586531;
-    double rightChange = (BackRightDrive.rotation(deg) - initialRight)*0.05759586531;
+    double leftChange = (LeftRotation.position(deg) - initialLeft)*0.02399827721;
+    double rightChange = (RightRotation.position(deg) - initialRight)*0.02399827721;
     double movement = (leftChange + rightChange) / 2;
     double changeX = (cos(initialRadian))*movement;
     double changeY = (sin(initialRadian))*movement;
@@ -212,10 +212,6 @@ void positionTracking(){
     Brain.Screen.print(globalY);
     Brain.Screen.print("     H: ");
     Brain.Screen.print(initialHeading);
-    Brain.Screen.newLine();
-    Brain.Screen.print("BL: ");
-    Brain.Screen.print(BackLeftDrive.rotation(deg));
-    Brain.Screen.print("     BR: ");
   }
 }
 
@@ -300,9 +296,9 @@ void turnLeft(int degrees){
   float origChangeHeading = changeHeading;
   Inertial.resetRotation();
   wait(30, msec);
-  float kp = 0.0015 * changeHeading + 0.035;
-  if(kp < 0.115){kp = 0.115;}
-  float kd = 90;
+  //0.07 for auton, 0.11 prog
+  float kp = 0.11;
+  float kd = 30;
   float previousAngleError;
   float angleDerivative;
   float turnV = 1.5;
@@ -314,9 +310,10 @@ void turnLeft(int degrees){
     angleDerivative = angleError - previousAngleError;
     turnV = (angleError * kp) - (angleDerivative * kd) + flatTurnValue;
     previousAngleError = angleError;
-    if(turnV > 50){turnV = 50;}
-    if(turnV < 7){turnV = 7;}
-
+    //if(turnV > 17){turnV = 17;}  //auton
+    //if(turnV < 10){turnV = 10;}  //auton
+    if(turnV > 25){turnV = 25;}  //skills
+    if(turnV < 15){turnV = 15;}  //skills
 
     BackLeftDrive.spin(fwd, -turnV * 2 * 12 / 100, volt);
     FrontLeftDrive.spin(fwd, -turnV * 2 * 12 / 100, volt);
@@ -372,9 +369,8 @@ void turnRight(int degrees){
   float origChangeHeading = changeHeading;
   Inertial.resetRotation();
   wait(30, msec);
-  float kp = 0.0015 * changeHeading + 0.025;
-  if(kp < 0.115){kp = 0.115;}
-  float kd = 10;
+  float kp = 0.11; //0.07 for auton
+  float kd = 30;
   float previousAngleError;
   float angleDerivative;
   float turnV = 1.5;
@@ -386,8 +382,10 @@ void turnRight(int degrees){
     angleDerivative = angleError - previousAngleError;
     turnV = (angleError*kp) + (angleDerivative * kd) + flatTurnValue;
     previousAngleError = angleError;
-    if(turnV > 50){turnV = 50;}
-    if(turnV < 7){turnV = 7;}
+    // if(turnV > 17){turnV = 17;}  //auton
+    // if(turnV < 10){turnV = 10;}  //auton
+    if(turnV > 25){turnV = 25;}  //skills
+    if(turnV < 15){turnV = 15;}  //skills
     
     BackLeftDrive.spin(fwd, turnV * 2 * 12 / 100, volt);
     FrontLeftDrive.spin(fwd, turnV * 2 * 12 / 100, volt);

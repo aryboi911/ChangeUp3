@@ -12,14 +12,16 @@
 // [Name]               [Type]        [Port(s)]
 // Controller1          controller                    
 // BackLeftDrive        motor         1               
-// BackRightDrive       motor         10              
+// BackRightDrive       motor         4               
 // FrontLeftDrive       motor         11              
 // FrontRightDrive      motor         20              
-// Sorter               motor         19              
-// Indexer              motor         12              
+// Sorter               motor         8               
+// Indexer              motor         14              
 // Inertial             inertial      2               
 // LeftIntake           motor         3               
-// RightIntake          motor         5               
+// RightIntake          motor         13              
+// LeftRotation         rotation      12              
+// RightRotation        rotation      10              
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
@@ -36,7 +38,7 @@ void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
 
-  Inertial.setHeading(180, degrees);
+  Inertial.setHeading(270, degrees);
   wait(2000, msec);
 
   // All activities that occur before the competition starts
@@ -47,7 +49,7 @@ void pre_auton(void) {
 void autonomous(void) {
   // ..........................................................................
   // Insert autonomous user code here.
-  thread t1(Orcah);
+  thread t1(OrcahBlue);
   thread t2(positionTracking);
 
   t1.join();
@@ -70,7 +72,7 @@ void usercontrol(void) {
     wait(20, msec); // Sleep the task for a short amount of time to
                      // prevent wasted resources.
     if(Controller1.ButtonA.pressing()){
-      thread t1(Orcah);
+      thread t1(OrcahBlue);
       thread t2(positionTracking);
 
       t1.join();

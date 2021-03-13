@@ -6,10 +6,10 @@ using namespace vex;
 int flywheelToggle;
 
 void joystickControl(){
-  FrontRightDrive.spin(fwd, Controller1.Axis2.position(), pct);
-  FrontLeftDrive.spin(fwd, Controller1.Axis3.position(), pct);
-  BackRightDrive.spin(fwd, Controller1.Axis2.position(), pct);
-  BackLeftDrive.spin(fwd, Controller1.Axis3.position(), pct);
+  FrontRightDrive.spin(fwd, Controller1.Axis2.position()*12.5/100, volt);
+  FrontLeftDrive.spin(fwd, Controller1.Axis3.position()*12.5/100, volt);
+  BackRightDrive.spin(fwd, Controller1.Axis2.position()*12.5/100, volt);
+  BackLeftDrive.spin(fwd, Controller1.Axis3.position()*12.5/100, volt);
   
 }
 

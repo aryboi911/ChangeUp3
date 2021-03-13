@@ -13,9 +13,11 @@ extern motor Indexer;
 extern inertial Inertial;
 extern motor LeftIntake;
 extern motor RightIntake;
+extern rotation LeftRotation;
+extern rotation RightRotation;
 
 /**
- * Used to initialize code/tasks/devices added using tools in VEXcode Text.
+ * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
  * 
  * This should be called at the start of your int main function.
  */

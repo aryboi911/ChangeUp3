@@ -12,6 +12,7 @@ void homeRowRight();
 void rightAndSide();
 void Side();
 void Center();
-void Orcah();
+void OrcahBlue();
+void OrcahRed();
 
 #endif
