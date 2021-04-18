@@ -14,4 +14,5 @@ void IgnoreX(double finalX, double finalY, int turnDirection, double kP, double 
               double minSpeed, double errorMargin);
 void IgnoreY(double finalX, double finalY, int turnDirection, double kP, double kD, 
               double minSpeed, double errorMargin);
+void setCoordinates(int changeNumber);
 #endif
